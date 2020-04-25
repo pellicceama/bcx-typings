@@ -1,50 +1,50 @@
-type Channel = {
-    AUTH: 'auth',
-    BALANCES: 'balances',
-    HEARTBEAT: 'heartbeat',
-    MARKET_L2: 'l2',
-    MARKET_L3: 'l3',
-    PRICES: 'prices',
-    SYMBOLS: 'symbols',
-    TICKER: 'ticker',
-    TRADES: 'trades',
-    TRADING: 'trading',
+export enum Channel {
+    AUTH = 'auth',
+    BALANCES = 'balances',
+    HEARTBEAT = 'heartbeat',
+    MARKET_L2 = 'l2',
+    MARKET_L3 = 'l3',
+    PRICES = 'prices',
+    SYMBOLS = 'symbols',
+    TICKER = 'ticker',
+    TRADES = 'trades',
+    TRADING = 'trading',
   }
 
-  type OrderType = {
-    LIMIT: 'limit',
-    MARKET: 'market',
-    STOP: 'stop',
-    STOP_LIMIT: 'stopLimit'
+  export enum Orderexport{
+    LIMIT = 'limit',
+    MARKET = 'market',
+    STOP = 'stop',
+    STOP_LIMIT = 'stopLimit'
   }
 
-  type OrderStatus = {
-    CANCELLED: 'cancelled'
-    EXPIRED: 'expired'
-    OPEN: 'open',
-    PARTIAL: 'partial',
-    PENDING: 'pending',
-    REJECTED: 'rejected',
+  export enum OrderStatus {
+    CANCELLED = 'cancelled',
+    EXPIRED = 'expired',
+    OPEN = 'open',
+    PARTIAL = 'partial',
+    PENDING = 'pending',
+    REJECTED = 'rejected',
   }
 
-  type OrderTimeInForce = {
-    GOOD_TILL_CANCEL: 'GTC',
-    GOOD_TILL_DATE: 'GTD',
-    FILL_OR_KILL: 'FOK',
-    IMMEDIATE_OR_CANCEL: 'IOC'
+  export enum OrderTimeInForce {
+    GOOD_TILL_CANCEL = 'GTC',
+    GOOD_TILL_DATE = 'GTD',
+    FILL_OR_KILL = 'FOK',
+    IMMEDIATE_OR_CANCEL = 'IOC'
   }
 
-  type ChannelAction = {
-    SUBSCRIBE: 'subscribe',
-    UNSUBSCRIBE: 'unsubscribe'
+  export enum Action {
+    SUBSCRIBE = 'subscribe',
+    UNSUBSCRIBE = 'unsubscribe'
   }
 
-  type ChannelEvent = {
-    SUBSCRIBED: 'subscribed',
-    UNSUBSCRIBED: 'unsubscribed',
-    REJECTED: 'rejected',
-    SNAPSHOT: 'snapshot',
-    UPDATED: 'updated'
+export enum ChannelEvent {
+    SUBSCRIBED = 'subscribed',
+    UNSUBSCRIBED = 'unsubscribed',
+    REJECTED = 'rejected',
+    SNAPSHOT = 'snapshot',
+    UPDATED = 'updated'
   }
 
 interface BaseResponse {
@@ -52,15 +52,16 @@ interface BaseResponse {
     event: ChannelEvent,
     channel: Channel,
     timestamp?: Date | string
+    text?: string
 }
 
 interface BaseSubscribeRequest {
-    action: 'subscribe',
+    action: Action.SUBSCRIBE,
     channel: Channel
 }
 
 interface BaseUnsubscribeRequest {
-    action: 'unsubscribe',
+    action: Action.UNSUBSCRIBE,
     channel: Channel
 }
 
@@ -76,15 +77,13 @@ type RestingOrder = {
     num: number
 }
 
-interface MarketL2Response extends BaseResponse {
+interface MarketResponse extends BaseResponse {
     symbol: string,
     bids: RestingOrder[],
     asks: RestingOrder[]
 }
 
 interface MarketL3SubscribeRequest extends MarketL2SubscribeRequest {}
-
-interface MarketL3Response extends MarketL2Response {}
 
 interface PricesSubscribeRequest extends BaseSubscribeRequest {
     symbol: string,
@@ -227,6 +226,8 @@ type OrderCreationRequest =
     LimitOrderCreationRequest |
     StopOrderCreationRequest |
     StopLimitOrderCreationRequest;
+
+type OrderCreationResponse = {}
 
 type CancelOrderRequest = {
     action: 'CancelOrderRequest',
