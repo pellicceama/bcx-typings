@@ -11,7 +11,7 @@ export enum Channel {
     TRADING = 'trading',
   }
 
-  export enum Orderexport{
+  export enum OrderType{
     LIMIT = 'limit',
     MARKET = 'market',
     STOP = 'stop',
